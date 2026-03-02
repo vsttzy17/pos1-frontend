@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../data/auth_api.dart';
+import 'package:fe/features/auth/data/auth_api.dart';
+import 'package:fe/dashboard.dart';
+// import 'package:fe/features/product/presentation/product_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,31 +14,26 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // void handleLogin() async {
-  //   var response = await AuthApi.login(
-  //     usernameController.text,
-  //     passwordController.text,
-  //   );
-
-  //   if (response != null) {
-  //     print("SUCCESS: ${response.data}");
-  //   } else {
-  //     print("FAILED LOGIN");
-  //   }
-  // }
-
   void handleLogin() async {
     bool success = await AuthApi.login(
       usernameController.text,
       passwordController.text,
     );
-
+    
     if (success) {
-      print("TOKEN SAVED");
+      // print("TOKEN SAVED");
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const DashboardPage()),
+        );
+      }
     } else {
-      print("FAILED LOGIN");
+      // print("FAILED LOGIN");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
